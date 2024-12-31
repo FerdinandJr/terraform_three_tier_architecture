@@ -37,7 +37,7 @@ choco install awscli
 
 ## Install Terraform and AWS CLI in Linux
 #### First, download the AWS CLI installer package
-1. 
+1. Download the AWS CLI installer package:
 
 ```bash
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -97,11 +97,6 @@ aws configure
 ```
 
 2. Enter your AWS credentials when prompted:
-
-AWS Access Key ID: Your IAM access key.
-AWS Secret Access Key: Your IAM secret key.
-Default region name: The AWS region you'd like to use (e.g., ap-southeast-1).
-Default output format: Choose between json, yaml, text, or table.
 
 ```bash
 AWS Access Key ID [None]: 
