@@ -104,3 +104,7 @@ AWS Secret Access Key [None]:
 Default region name [None]: ap-southeast-1
 Default output format [None]: 
 ```
+
+
+## Reference
+https://www.youtube.com/watch?v=ZP_vAbjfFMs
