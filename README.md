@@ -1,5 +1,4 @@
-# Learn It Right Way
-Get Started with Terraform: Install and Create Your First Infrastructure
+# Get Started with Terraform: Install and Create Your First Infrastructure
 
 
 ## Install Terraform and AWS CLI in Windows
@@ -105,6 +104,12 @@ Default region name [None]: ap-southeast-1
 Default output format [None]: 
 ```
 
+
+## Generate Public key
+
+```bash
+ssh-keygen -t rsa -b 4096 -C "example comment"
+```
 
 ## Reference
 https://www.youtube.com/watch?v=ZP_vAbjfFMs
