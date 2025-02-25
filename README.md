@@ -1,4 +1,4 @@
-# Get Started with Terraform: Install and Create Your First Infrastructure
+# Terraform: Install and Create My First Infrastructure
 
 
 ## Install Terraform and AWS CLI in Windows
