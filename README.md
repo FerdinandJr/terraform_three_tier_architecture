@@ -1,5 +1,6 @@
 # Terraform: Install and Create My First Infrastructure
 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/QTXNUg4UYhI?si=CX6TWo5wp6mkg3Io)](https://www.youtube.com/watch?v=QTXNUg4UYhI?si=CX6TWo5wp6mkg3Io)
 
 ## Install Terraform and AWS CLI in Windows
 1. Open PowerShell as Administrator:
