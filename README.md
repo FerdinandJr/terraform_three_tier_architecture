@@ -2,6 +2,12 @@
 
 [![terraform_three_tier_architecture](https://img.youtube.com/vi/QTXNUg4UYhI/0.jpg)](https://www.youtube.com/watch?v=QTXNUg4UYhI)
 
+## Table of Contents
+- [Install Terraform and AWS CLI in Windows](#installation)
+- [Install Terraform and AWS CLI in Linux](#installation)
+- [Configure AWS CLI](#installation)
+- [Video](#video)
+
 ## Install Terraform and AWS CLI in Windows
 1. Open PowerShell as Administrator:
 
@@ -112,5 +118,5 @@ Default output format [None]:
 ssh-keygen -t rsa -b 4096 -C "example comment"
 ```
 
-## Reference
-https://www.youtube.com/watch?v=ZP_vAbjfFMs
+## Video
+## https://www.youtube.com/watch?v=ZP_vAbjfFMs
