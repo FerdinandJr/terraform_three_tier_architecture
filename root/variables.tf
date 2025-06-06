@@ -1,10 +1,11 @@
-variable "region" {}
-variable "vpc_cidr" {}
-variable "project_name" {}
-variable "public_subnet_az1_cidr" {}
-variable "public_subnet_az2_cidr" {}
-variable "private_app_subnet_az1_cidr" {}
-variable "private_app_subnet_az2_cidr" {}
-variable "private_db_subnet_az1_cidr" {}
-variable "private_db_subnet_az2_cidr" {}
-
+variable region {}
+variable project_name {}
+variable vpc_cidr {}       
+variable pub_sub_1a_cidr {}
+variable pub_sub_2b_cidr {}
+variable pri_sub_3a_cidr {}
+variable pri_sub_4b_cidr {}
+variable pri_sub_5a_cidr {}
+variable pri_sub_6b_cidr {}
+variable db_username {}
+variable db_password {}

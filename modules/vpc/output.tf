@@ -1,45 +1,37 @@
 output "region" {
-    value = var.region
-}
-
-output "vpc_cidr" {
-    value = var.vpc_cidr
+  value = var.region
 }
 
 output "project_name" {
-    value = var.project_name
+  value = var.project_name
 }
-
-output "public_subnet_az1_cidr" {
-    value = var.public_subnet_az1_cidr
-}
-
-output "public_subnet_az2_cidr" {
-    value = var.public_subnet_az2_cidr
-}
-
-output "private_app_subnet_az1_cidr" {
-    value = var.private_app_subnet_az1_cidr
-}
-
-output "private_app_subnet_az2_cidr" {
-    value = var.private_app_subnet_az2_cidr
-}
-
-output "private_db_subnet_az1_cidr" {
-    value = var.private_db_subnet_az1_cidr
-}
-
-output "private_db_subnet_az2_cidr" {
-    value = var.private_db_subnet_az2_cidr
-}
-
-#EC2 and Security Group
 
 output "vpc_id" {
   value = aws_vpc.vpc.id
 }
 
-output "public_subnet_az1_cidr_id" {
-    value = aws_subnet.public_subnet_az1.id
+output "pub_sub_1a_id" {
+  value = aws_subnet.pub_sub_1a.id
+}
+output "pub_sub_2b_id" {
+  value = aws_subnet.pub_sub_2b.id
+}
+output "pri_sub_3a_id" {
+  value = aws_subnet.pri_sub_3a.id
+}
+
+output "pri_sub_4b_id" {
+  value = aws_subnet.pri_sub_4b.id
+}
+
+output "pri_sub_5a_id" {
+  value = aws_subnet.pri_sub_5a.id
+}
+
+output "pri_sub_6b_id" {
+    value = aws_subnet.pri_sub_6b.id 
+}
+
+output "igw_id" {
+    value = aws_internet_gateway.internet_gateway
 }
