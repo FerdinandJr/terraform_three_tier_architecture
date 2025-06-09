@@ -7,5 +7,6 @@ variable "db_sub_name" {
     default = "store-db-subnet-a-b"
 }
 variable "db_name" {
-    default = "storedb"
+    default = "my_store"
 }
+

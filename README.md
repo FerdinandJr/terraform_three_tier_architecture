@@ -1,122 +1,92 @@
-# Terraform: Install and Create My First Infrastructure
+#Three Tier Terraform & AWS Infrastructure Setup
 
-[![terraform_three_tier_architecture](https://img.youtube.com/vi/QTXNUg4UYhI/0.jpg)](https://www.youtube.com/watch?v=QTXNUg4UYhI)
+## Pre-Terraform Setup
 
-## Table of Contents
-- [Install Terraform and AWS CLI in Windows](#installation)
-- [Install Terraform and AWS CLI in Linux](#installation)
-- [Configure AWS CLI](#installation)
-- [Video](#video)
+### 1. Generate SSH Key Pair
 
-## Install Terraform and AWS CLI in Windows
-1. Open PowerShell as Administrator:
-
+This key will be used for EC2 instance access.
 ```bash
-Press Press Windows + X and select Windows PowerShell (Admin) or Command Prompt (Admin)
+cd modules/key/
+ssh-keygen -t rsa -b 4096 -f my-key
 ```
 
-2. Install Chocolatey:
+### Backend Configuration (S3 for Terraform State)
 
+terraform {
+  backend "s3" {
+    bucket         = "your-s3-bucket-name"
+    key            = "path/to/terraform.tfstate"
+    region         = "your-aws-region"
+    use_lockfile   = true
+    encrypt        = true
+  }
+}
+
+
+### Ensure that you have a valid SSL/TLS certificate available in AWS Certificate Manager (ACM):
+
+Navigate to the AWS Console → Certificate Manager (ACM)
+
+Create a new one using the domain name where your application will be hosted
+
+### Confirm that your domain is properly configured in Amazon Route 53:
+
+Go to AWS Console → Route 53 → Hosted Zones
+
+Ensure there is a public hosted zone for your domain
+
+### Terraform Apply
 ```bash
-Set-ExecutionPolicy Bypass -Scope Process -Force; 
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; 
-iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+terraform init
+terraform plan
+terraform apply
 ```
 
-3. Verify Installation:
+### Database Setup and Secrets Manager
 
+1. Store DB Credentials in AWS Secrets Manager
+Create a secret in AWS Secrets Manager in JSON format:
 ```bash
-choco --version
+{
+  "username": "your-db-username",
+  "password": "your-db-password"
+}
 ```
 
-4. To install Terraform:
-
+Use Terraform to reference the secret:
 ```bash
-choco install terraform
+data "aws_secretsmanager_secret" "rds" {
+  name = "your-secrets-manager-name"
+}
 ```
 
-5. To install AWS CLI:
+## Post-Terraform Setup
 
+### Use the bastion host to connect securely to your private EC2 instances and RDS database.
+
+Modify the config.sh script in the launch template repo, update the PHP connection config script and ensure the Auto Scaling Group (ASG) provisions instances with a valid RDS connection.
+
+<?php 
+$con = mysqli_connect('your-rds-endpoint', 'dbusername', 'dbpassword', 'my_store');
+if ($con) {
+  echo "Connected successfully!";
+}
+?>
+
+### MySQL Database Initialization 
+
+1. Create the Database. 
+SSH into your EC2 instance (via bastion) and create the database:
 ```bash
-choco install awscli
+mysql -h <your-rds-endpoint> -u <dbusername> -p -e "CREATE DATABASE IF NOT EXISTS my_store;"
 ```
-
-## Install Terraform and AWS CLI in Linux
-#### First, download the AWS CLI installer package
-1. Download the AWS CLI installer package:
-
+2. Import SQL Schema 
+Paste your SQL schema into a file:
 ```bash
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+nano my_store.sql
+# Paste contents here and save
 ```
-
-2. Unzip the downloaded package:
-
+Import into MySQL:
 ```bash
-unzip awscliv2.zip
+mysql -h <your-rds-endpoint> -u <dbusername> -p my_store < my_store.sql
 ```
-
-3. Run the installation script:
-
-```bash
-sudo ./aws/install
-```
-
-4. Verify AWS CLI Installation: 
-
-```bash
-aws --version
-```
-#### Second, Install Terraform on Linux
-5. Open your terminal and run the following commands to install the required packages and add HashiCorp's repository:
-
-```bash
-sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
-sudo apt-get install -y curl
-```
-
-6. Then, add HashiCorp’s official GPG key and repository:
-
-```bash
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-sudo apt-add-repository "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-```
-
-7. Once the repository is added, update your package list and install Terraform:
-
-```bash
-sudo apt-get update
-sudo apt-get install terraform
-```
-
-8. Verify Installation
-
-```bash
-terraform -v
-```
-
-## Configure AWS CLI
-
-1. Run the aws configure command
-
-```bash
-aws configure
-```
-
-2. Enter your AWS credentials when prompted:
-
-```bash
-AWS Access Key ID [None]: 
-AWS Secret Access Key [None]: 
-Default region name [None]: ap-southeast-1
-Default output format [None]: 
-```
-
-
-## Generate Public key
-
-```bash
-ssh-keygen -t rsa -b 4096 -C "example comment"
-```
-
-## Video
-## https://www.youtube.com/watch?v=ZP_vAbjfFMs

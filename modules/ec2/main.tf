@@ -1,10 +1,11 @@
-resource "aws_instance" "ec2_instance" {
-  ami                    = var.ami_id
-  instance_type          = var.instance_type
-  security_groups =   [var.ec2_security_groups]
-  subnet_id = var.public_subnet_az1_cidr_id
-
+resource "aws_instance" "bastion" {
+  instance_type               = var.instance_type
+  ami                         = var.ami_id
+  subnet_id                   = var.pub_sub_1a_id
+  vpc_security_group_ids      = [var.bastion_sg_id]
+  associate_public_ip_address = true
+  key_name                    = var.key_name
   tags = {
-    Name = "try ec2"
-    }
+    Name = "Bastion Host"
+  }
 }

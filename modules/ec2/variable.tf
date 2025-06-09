@@ -2,11 +2,11 @@ variable "instance_type" {
   default = "t2.micro"
 }
 variable "ami_id" {
-  default = "ami-06650ca7ed78ff6fa"
+  default = "ami-069cb3204f7a90763"
 }
 
-variable "ec2_security_groups" {
-}
+variable pub_sub_1a_id {}
 
-variable "public_subnet_az1_cidr_id" {
-}
+variable bastion_sg_id {}
+
+variable "key_name" {}
