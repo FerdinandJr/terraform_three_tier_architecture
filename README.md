@@ -15,6 +15,7 @@ ssh-keygen -t rsa -b 4096 -f my-key
 
 ### Backend Configuration (S3 for Terraform State)
 
+```bash
 terraform {
   backend "s3" {
     bucket         = "your-s3-bucket-name"
@@ -24,7 +25,7 @@ terraform {
     encrypt        = true
   }
 }
-
+```
 
 
 ### Ensure that you have a valid SSL/TLS certificate available in AWS Certificate Manager (ACM):
@@ -33,11 +34,15 @@ Navigate to the AWS Console → Certificate Manager (ACM)
 
 Create a new one using the domain name where your application will be hosted
 
+
+
 ### Confirm that your domain is properly configured in Amazon Route 53:
 
 Go to AWS Console → Route 53 → Hosted Zones
 
 Ensure there is a public hosted zone for your domain
+
+
 
 ### Terraform Apply
 ```bash
@@ -57,6 +62,7 @@ Create a secret in AWS Secrets Manager in JSON format:
   "password": "your-db-password"
 }
 ```
+
 
 Use Terraform to reference the secret:
 ```bash
@@ -91,12 +97,14 @@ SSH into your EC2 instance (via bastion) and create the database:
 mysql -h <your-rds-endpoint> -u <dbusername> -p -e "CREATE DATABASE IF NOT EXISTS my_store;"
 ```
 
+
 2. Import SQL Schema 
 Paste your SQL schema into a file:
 ```bash
 nano my_store.sql
 # Paste contents here and save
 ```
+
 
 Import into MySQL:
 ```bash
