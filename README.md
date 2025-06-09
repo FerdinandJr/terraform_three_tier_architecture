@@ -1,4 +1,5 @@
-#Three Tier Terraform & AWS Infrastructure Setup
+# Three Tier Terraform & AWS Infrastructure Setup
+![terraform-three-tier-architecture](https://github.com/FerdinandJr/terraform_three_tier_architecture/blob/fe04a1153334022cb4bc94b77bd6e88f32f961ff/AWS%20Three-Tier-Architecture.svg)
 
 ## Pre-Terraform Setup
 
@@ -9,6 +10,8 @@ This key will be used for EC2 instance access.
 cd modules/key/
 ssh-keygen -t rsa -b 4096 -f my-key
 ```
+
+
 
 ### Backend Configuration (S3 for Terraform State)
 
@@ -21,6 +24,7 @@ terraform {
     encrypt        = true
   }
 }
+
 
 
 ### Ensure that you have a valid SSL/TLS certificate available in AWS Certificate Manager (ACM):
@@ -42,6 +46,7 @@ terraform plan
 terraform apply
 ```
 
+
 ### Database Setup and Secrets Manager
 
 1. Store DB Credentials in AWS Secrets Manager
@@ -60,18 +65,23 @@ data "aws_secretsmanager_secret" "rds" {
 }
 ```
 
+
+
 ## Post-Terraform Setup
 
 ### Use the bastion host to connect securely to your private EC2 instances and RDS database.
 
 Modify the config.sh script in the launch template repo, update the PHP connection config script and ensure the Auto Scaling Group (ASG) provisions instances with a valid RDS connection.
 
+```bash
 <?php 
 $con = mysqli_connect('your-rds-endpoint', 'dbusername', 'dbpassword', 'my_store');
 if ($con) {
   echo "Connected successfully!";
 }
 ?>
+```
+
 
 ### MySQL Database Initialization 
 
@@ -80,12 +90,14 @@ SSH into your EC2 instance (via bastion) and create the database:
 ```bash
 mysql -h <your-rds-endpoint> -u <dbusername> -p -e "CREATE DATABASE IF NOT EXISTS my_store;"
 ```
+
 2. Import SQL Schema 
 Paste your SQL schema into a file:
 ```bash
 nano my_store.sql
 # Paste contents here and save
 ```
+
 Import into MySQL:
 ```bash
 mysql -h <your-rds-endpoint> -u <dbusername> -p my_store < my_store.sql
